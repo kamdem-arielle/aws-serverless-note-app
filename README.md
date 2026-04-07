@@ -1,14 +1,13 @@
 # AWS Serverless Notes App
 
-A full-stack serverless notes application built on AWS — designed as a hands-on portfolio project to explore and learn AWS serverless services for real-world app development and deployment.
+A full-stack serverless notes application built on AWS to explore and learn AWS serverless services as proof of concept for a real-world app development and deployment.
 
-The idea is simple: build a clean, functional note-taking app where users can sign up, log in, and manage their personal notes — all powered by a fully serverless backend on AWS.
+The idea is simple: build a small note-taking app where users can sign up, log in, and manage their personal notes with a fully serverless backend on AWS.
 
 ## Why This Project?
 
-I built this project to get deeper, practical experience with AWS serverless architecture. Instead of just reading docs, I wanted to actually wire together real services — Lambda, API Gateway, DynamoDB, Cognito, CloudFront — and understand how they connect in a production-like setup.
+I built this project to get practical experience with AWS serverless services for the purpose of the development of a more complex project. Instead of just reading docs, I wanted to actually wire together the services.
 
-It's a small app on purpose. The goal isn't complexity — it's clarity. Every service has a specific job, and this project is a way to learn each one by building something real.
 
 ## Architecture
 
@@ -57,7 +56,7 @@ Aws-serverless-note-app/
 │   │   ├── zip-layer.mjs              # Zips the Lambda Layer for deployment
 │   │   └── zip-functions.mjs          # Zips each Lambda function for deployment
 │   └── package.json                   # Backend tooling (archiver for zipping)
-├── frontend/                          # (coming soon)
+├── frontend/                          # 
 ├── documentation/
 │   └── instructions                   # Full implementation plan and technical reference
 └── README.md
@@ -100,18 +99,17 @@ Each note item contains: `userId`, `noteId`, `title`, `content`, `createdAt`, an
 ### Prerequisites
 
 - Node.js 22.x
-- AWS CLI configured with appropriate IAM permissions
-- An AWS account with access to Lambda, DynamoDB, API Gateway, S3, CloudFront, Cognito, Route 53, and ACM
+- An AWS IAM user account with least privilege access to Lambda, DynamoDB, API Gateway, S3, CloudFront, Cognito, Route 53, and ACM
 
 ### Install Dependencies
 
 ```bash
 # Lambda Layer dependencies
-cd backend/layers/nodejs
+cd /backend/layers/nodejs
 npm install
 
 # Backend tooling (archiver for zipping)
-cd ../../
+cd /backend
 npm install
 ```
 
@@ -129,8 +127,7 @@ npm run zip:all          # Runs both
 This project is a learning exercise, and I'm documenting everything along the way. Some key takeaways so far:
 
 - **Composite keys in DynamoDB** eliminate the need for secondary indexes when your access patterns are well-defined
-- **Lambda Layers** keep shared code DRY across functions — one place to update, all functions benefit
-- **Condition expressions** in DynamoDB make operations atomic — no need for separate read-then-write patterns
+- **Lambda Layers** keep shared code across functions.
 - **CORS in serverless** requires attention at multiple layers: Lambda response headers, API Gateway configuration, and CloudFront behavior settings
 
 ## Status
@@ -139,14 +136,11 @@ This project is a learning exercise, and I'm documenting everything along the wa
 - [x] Lambda Layer — DynamoDB client and response helpers
 - [x] Lambda Functions — all five CRUD operations
 - [x] Zip scripts for deployment
-- [ ] DynamoDB table creation
-- [ ] Lambda deployment and testing
-- [ ] API Gateway setup
+- [x] DynamoDB table creation
+- [x] Lambda deployment and testing
+- [x] API Gateway setup
 - [ ] Cognito User Pool and authentication
 - [ ] Frontend development
 - [ ] CloudFront distribution and custom domain
 - [ ] End-to-end testing
 
-## License
-
-This project is built for proof of concept purposes as a prerequisite for the development of a more professional project.
