@@ -1,0 +1,14 @@
+{
+  "name": "notes-app-backend",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Backend tooling for AWS Serverless Notes App",
+  "scripts": {
+    "zip:layer": "node scripts/zip-layer.mjs",
+    "zip:functions": "node scripts/zip-functions.mjs",
+    "zip:all": "node scripts/zip-layer.mjs && node scripts/zip-functions.mjs"
+  },
+  "devDependencies": {
+    "archiver": "^7.0.0"
+  }
+}
