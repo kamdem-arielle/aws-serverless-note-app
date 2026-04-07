@@ -1,0 +1,10 @@
+{
+  "name": "notes-shared-layer",
+  "version": "1.0.0",
+  "type": "module",
+  "description": "Shared Lambda Layer — DynamoDB client and response helpers",
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.750.0",
+    "@aws-sdk/lib-dynamodb": "^3.750.0"
+  }
+}
