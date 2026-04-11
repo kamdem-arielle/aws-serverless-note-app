@@ -3,9 +3,7 @@ import { success, badRequest, notFound, error } from "/opt/nodejs/shared/respons
 
 export const handler = async (event) => {
   try {
-    // TODO: Replace with Cognito JWT extraction once User Pool is configured
-    // const userId = event.requestContext.authorizer.claims.sub;
-    const userId = event.headers?.["x-user-id"] || "temp-user-id";
+    const userId = event.requestContext.authorizer.jwt.claims.sub;
 
     const noteId = event.pathParameters?.noteId;
 
