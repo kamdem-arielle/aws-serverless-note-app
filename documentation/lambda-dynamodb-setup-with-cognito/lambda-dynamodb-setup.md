@@ -1,6 +1,6 @@
 # Securing a Serverless API Gateway API with Amazon Cognito
 
-This guide covers how to secure your serverless API with Amazon Cognito authentication — from creating the User Pool, to configuring the API Gateway authorizer, to extracting the authenticated user's identity in your Lambda functions.
+This documents how I secured my serverless API with Amazon Cognito authentication — from creating the User Pool, to configuring the API Gateway authorizer, to extracting the authenticated user's identity in my Lambda functions.
 
 ---
 
@@ -10,7 +10,7 @@ This guide covers how to secure your serverless API with Amazon Cognito authenti
 2. Configure the sign-in experience:
    - **Sign-in options**: Select **Email** as the sign-in identifier
 3. Configure the password policy and MFA settings according to your requirements
-4. Configure the required attributes. For this project the following attributes are required:
+4. Configure the required attributes. For my project the following attributes are required:
    - `email`
    - `name`
    - `family_name`
@@ -20,7 +20,7 @@ This guide covers how to secure your serverless API with Amazon Cognito authenti
    - Set an **App client name** (e.g. `notes-app-client`)
    - **Do not generate a client secret** (required for browser-based apps using the Cognito Identity JS SDK)
 8. Review and **Create** the User Pool
-9. Note down the following values — you'll need them in both frontend and backend configuration:
+9. Note down the following values — I needed them in both frontend and backend configuration:
    - **User Pool ID** (e.g. `us-east-1_XXXXXXXXX`)
    - **App Client ID** (e.g. `6ptv8h09uuo2cartec2v0r55a4`)
 
@@ -69,18 +69,18 @@ If you use a REST API instead of HTTP API, the authorizer setup differs:
 
 ## 3. Update Lambda Functions
 
-With the authorizer in place, API Gateway validates the JWT token before your Lambda is invoked. The authenticated user's `sub` (unique user ID) is available in the event object.
+With the authorizer in place, API Gateway validates the JWT token before my Lambda is invoked. The authenticated user's `sub` (unique user ID) is available in the event object.
 
 ### Extracting the User ID
 
-Replace any temporary or hardcoded user ID logic:
+I replaced the temporary header-based user ID logic:
 
 ```javascript
 // BEFORE — temporary header-based approach
 const userId = event.headers?.["x-user-id"] || "temp-user-id";
 ```
 
-With the Cognito authorizer claims:
+With the actual Cognito authorizer claims:
 
 **HTTP API (v2):**
 ```javascript
@@ -104,7 +104,7 @@ The extra `.jwt` level in HTTP API v2 is because HTTP APIs support multiple auth
 
 ### Applied Change
 
-This update was applied to all five Lambda functions:
+I applied this update to all five of my Lambda functions:
 
 - `createNote/createNote.mjs`
 - `getNote/getNote.mjs`
@@ -118,7 +118,7 @@ Each function now uses:
 const userId = event.requestContext.authorizer.jwt.claims.sub;
 ```
 
-This ensures that every database operation (create, read, update, delete) is scoped to the authenticated user's identity as verified by Cognito.
+This ensures that every database operation (create, read, update, delete) is scoped to the authenticated user's identity as verified by Cognito. No more hardcoded or header-based user IDs.
 
 ---
 
@@ -144,7 +144,7 @@ Lambda Function
 DynamoDB (query scoped to userId)
 ```
 
-- The **frontend** obtains tokens by authenticating with Cognito (sign-up, confirm, sign-in flows using `amazon-cognito-identity-js`)
-- The **axios interceptor** attaches the access token as a `Bearer` header to every API request and handles token refresh
-- **API Gateway** validates the token — invalid or expired tokens are rejected with a `401 Unauthorized` before reaching Lambda
-- **Lambda** trusts the claims from API Gateway and uses `sub` as the user's unique identifier for all database operations
+- My **frontend** obtains tokens by authenticating with Cognito (sign-up, confirm, sign-in flows using `amazon-cognito-identity-js`)
+- My **axios interceptor** attaches the access token as a `Bearer` header to every API request and handles token refresh
+- **API Gateway** validates the token — invalid or expired tokens are rejected with a `401 Unauthorized` before reaching my Lambda
+- My **Lambda functions** trust the claims from API Gateway and use `sub` as the user's unique identifier for all database operations
