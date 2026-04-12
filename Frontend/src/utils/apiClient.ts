@@ -9,7 +9,7 @@ const poolData = {
 const userPool = new CognitoUserPool(poolData);
 
 const apiClient = axios.create({
-  baseURL: 'https://ijufbk0l4c.execute-api.us-east-1.amazonaws.com/prod',
+  baseURL: 'https://ijufbk0l4c.execute-api.us-east-1.amazonaws.com/api/prod',
 });
 
 let isRefreshing = false;
