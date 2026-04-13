@@ -4,6 +4,15 @@ This documents how I secured my serverless API with Amazon Cognito authenticatio
 
 ---
 
+## Table of Contents
+
+1. [Create a Cognito User Pool](#1-create-a-cognito-user-pool)
+2. [Configure API Gateway Authorizer](#2-configure-api-gateway-authorizer)
+3. [Update Lambda Functions](#3-update-lambda-functions)
+4. [How It All Fits Together](#4-how-it-all-fits-together)
+
+---
+
 ## 1. Create a Cognito User Pool
 
 1. Open the **AWS Console** → **Amazon Cognito** → **Create user pool**
